@@ -1,6 +1,8 @@
 //Para utilizar a sobrescrita de métodos basta reescrever 
 //o método na classe filha utilizando o mesmo nome:
 
+//polismorfismo é reescrever o metodo em cada instancia diferente
+
 class Veiculo {
   mover() {
     console.log("O veículo está se movendo.")
