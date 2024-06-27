@@ -36,6 +36,7 @@ Este método retorna o objeto de destino. É frequentemente utilizado para combi
 propriedades e métodos a um objeto existente.
 
 Object.assign(target, ...sources)
+Object.assign(alvo, ...fonte)
 
 target: O objeto destino.
 sources: Um ou mais objetos de origem cujas propriedades serão copiadas para o objeto destino.
