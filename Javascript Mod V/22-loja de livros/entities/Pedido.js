@@ -31,12 +31,3 @@ module.exports = class Pedido {
     }
   }
   
-module.exports = class Pedido {
-  #total
-  #itens
-  #usuario
-
-  constructor(itens, usuario){
-
-  }
-}
