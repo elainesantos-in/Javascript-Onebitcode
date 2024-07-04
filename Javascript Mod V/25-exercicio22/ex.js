@@ -40,6 +40,18 @@ Você deverá construir uma aplicação em javascript que simula o funcionamento
 */ 
 
 const Parcelas = require('./entities/Parcelas'); // Importa a classe Parcelas do arquivo Parcelas.js
+const App = require('./App.js');
+const Transferencia = require('./entities/Transferencia');
 
 const situacaoParcelas = new Parcelas(40000, 10, 3, 'pendente');
 console.log(situacaoParcelas);
+
+
+const newCliente = new App()
+console.table(newCliente.getClientes())
+newCliente.novoUsuario('Taisa','taisa@gmail.com', 9876)
+console.table(newCliente.getClientes())
+
+const transferencia = new Transferencia('Diana', 'Elaine', 1200.00, '2024-07-03');
+console.log(transferencia.novaTransferencia());
+

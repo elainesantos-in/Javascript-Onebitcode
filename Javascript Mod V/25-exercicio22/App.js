@@ -11,19 +11,38 @@ App:
 */
 
 module.exports = class App {
-        #cliente = []
-
-        static novoUsuario(nome, email, senha){
-                const novoCliente = { }
-                cliente.forEach((cliente.email) => {
-                        if (email === cliente.email) {
-                          console.log(`email existente, tente outro`)
-                        }
-                        else{   
-                                return this.email
-                                 
-                        }
-                      })
-
+        #clientes = [
+                { nome: 'Mateus', email: 'mateus@gmail.com', senha: 1234 },
+                { nome: 'Elaine', email: 'elaine@gmail.com', senha: 4321 },
+        ]
+    
+        novoUsuario(nome, email, senha) {
+            let emailExistente = false;
+            
+            // Verifica se o email já existe
+            this.#clientes.forEach(cliente => {
+                if (cliente.email === email) {
+                    emailExistente = true;
+                }
+            });
+    
+            if (emailExistente) {
+                console.log('Email existente, tente outro');
+                return ;
+            } else {
+                const novoCliente = { nome, email, senha };
+                this.#clientes.push(novoCliente);
+                console.log('Usuário adicionado com sucesso');
+                return novoCliente;
+            }
         }
-}
+    
+        // Método para acessar clientes (opcional)
+        getClientes() {
+            return this.#clientes;
+        }
+    }
+    
+
+
+                        
