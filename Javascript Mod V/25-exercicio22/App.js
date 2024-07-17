@@ -9,40 +9,57 @@ App:
         - Deve possuir métodos estáticos para realizar as operações de depósito, transferência e empréstimo. Elas devem ter como parâmetro as informações necessárias, como o email do usuário que está realizando a operação e o valor.
         Deve possuir um método para alterar a taxa dos empréstimos.
 */
+const Deposito = require("./Deposito")
+const Emprestimo = require("./Emprestimo")
+const Transferencia = require("./Transferencia")
+const Usuario = require("./Usuario")
 
 module.exports = class App {
-        #clientes = [
-                { nome: 'Mateus', email: 'mateus@gmail.com', senha: 1234 },
-                { nome: 'Elaine', email: 'elaine@gmail.com', senha: 4321 },
-        ]
-    
-        novoUsuario(nome, email, senha) {
-            let emailExistente = false;
-            
-            // Verifica se o email já existe
-            this.#clientes.forEach(cliente => {
-                if (cliente.email === email) {
-                    emailExistente = true;
-                }
-            });
-    
-            if (emailExistente) {
-                console.log('Email existente, tente outro');
-                return ;
-            } else {
-                const novoCliente = { nome, email, senha };
-                this.#clientes.push(novoCliente);
-                console.log('Usuário adicionado com sucesso');
-                return novoCliente;
-            }
-        }
-    
-        // Método para acessar clientes (opcional)
-        getClientes() {
-            return this.#clientes;
-        }
+  static #usuarios = []
+
+  static encontrarUsuario(email) {
+    const usuario = this.#usuarios.find(usuario => usuario.email === email)
+    return usuario ?? null
+  }
+
+  static criarUsuario(email, nomeCompleto) {
+    const usuarioExiste = App.encontrarUsuario(email)
+    if (!usuarioExiste) {
+      this.#usuarios.push(new Usuario(email, nomeCompleto))
     }
-    
+  }
+
+  static depositar(email, valor) {
+    const usuario = App.encontrarUsuario(email)
+    if (usuario) {
+      const novoDeposito = new Deposito(valor)
+      usuario.conta.adicionarDeposito(novoDeposito)
+    }
+  }
+
+  static transferir(deEmailUsuario, paraEmailUsuario, valor) {
+    const deUsuario = App.encontrarUsuario(deEmailUsuario)
+    const paraUsuario = App.encontrarUsuario(paraEmailUsuario)
+    if (deUsuario && paraUsuario) {
+      const novaTransferencia = new Transferencia(deUsuario, paraUsuario, valor)
+      deUsuario.conta.adicionarTransferencia(novaTransferencia)
+      paraUsuario.conta.adicionarTransferencia(novaTransferencia)
+    }
+  }
+
+  static fazerEmprestimo(email, valor, numeroDeParcelas) {
+    const usuario = App.encontrarUsuario(email)
+    if (usuario) {
+      const novoEmprestimo = new Emprestimo(valor, numeroDeParcelas)
+      usuario.conta.adicionarEmprestimo(novoEmprestimo)
+    }
+  }
+
+  static alterarTaxaEmprestimo(novaTaxaPercentual) {
+    Emprestimo.taxa = novaTaxaPercentual
+  }
+}
+
 
 
                         
